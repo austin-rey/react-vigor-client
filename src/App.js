@@ -2,7 +2,7 @@ import './App.css';
 import Routes from './components/Routes';
 function App() {
   return (
-    <div className="App">
+    <div className="App bg-gray-700">
       <Routes />
     </div>
   );

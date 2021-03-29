@@ -1,9 +1,10 @@
 import React from 'react';
+import PageHeader from '../components/page-layout/PageHeader';
 
 const Auth = () => {
   return (
-    <div>
-      <h1>Auth Page</h1>
+    <div className="container mx-auto">
+      <PageHeader heading="Vigor Authentication" />
     </div>
   );
 };

@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 const Header = () => {
   return (
-    <div className="bg-gray-800 h-20 flex">
-      <div className="flex flex-row items-center justify-end w-full pr-5">
+    <div className="bg-gray-900 h-20 flex">
+      <div className="flex flex-row items-center justify-end w-full pr-5 container mx-auto">
         <p>
           <Link to="/" className="p-2 text-white font-sans font-bold text-sm">
             Home
