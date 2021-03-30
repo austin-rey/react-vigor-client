@@ -27,11 +27,11 @@ const Dashboard = () => {
     <div className="container mx-auto">
       <PageHeader heading="Dashboard" />
       <Calendar />
-      <div className="flex flex-row">
-        <div className="flex flex-col w-64 pr-6 border-r-2">
+      <div className="flex flex-col">
+        <div className="flex flex-row items-center justify-between w-full border-b-2">
           <PageSidebar />
         </div>
-        <div className="flex flex-grow flex-col pl-6">
+        <div className="flex flex-grow flex-col">
           <PageSection
             icon={<FontAwesomeIcon icon={faDumbbell} />}
             heading="Fitness"

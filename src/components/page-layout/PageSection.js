@@ -1,11 +1,14 @@
 import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronCircleDown } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronCircleDown,
+  faMapMarkerAlt,
+} from '@fortawesome/free-solid-svg-icons';
 
 const PageSection = ({
   anchor = '/',
-  icon = <p>o</p>,
+  icon = <FontAwesomeIcon icon={faMapMarkerAlt} />,
   heading = 'Section Heading',
   subheading = 'Section Subheading',
   body,
@@ -13,9 +16,9 @@ const PageSection = ({
   return (
     <div className="w-full border-b-2 mb-10">
       <div className="flex w-full flex-row justify-between">
-        <div>
+        <div className="mb-12">
           <div className="flex flex-row items-center">
-            <span className="text-xl pr-4 text-center text-green-500">
+            <span className="text-2xl pr-4 text-center text-green-500">
               {icon}
             </span>
             <h2
