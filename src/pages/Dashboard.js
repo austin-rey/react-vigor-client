@@ -16,12 +16,6 @@ import {
   faMedal,
 } from '@fortawesome/free-solid-svg-icons';
 
-// Hooks to fetch data
-const dataFitness = [];
-const dataDiet = [];
-const dataGoals = [];
-const dataWellness = [];
-
 const Dashboard = () => {
   return (
     <div className="container mx-auto">
@@ -37,28 +31,28 @@ const Dashboard = () => {
             heading="Fitness"
             subheading="Log workouts and create fitness routines."
             anchor="fitness"
-            body={<SectionFitness data={dataFitness} />}
+            body={<SectionFitness />}
           />
           <PageSection
             icon={<FontAwesomeIcon icon={faCarrot} />}
             heading="Diet"
             subheading="Log food consumption and store meal information."
             anchor="diet"
-            body={<SectionDiet data={dataDiet} />}
+            body={<SectionDiet />}
           />
           <PageSection
             icon={<FontAwesomeIcon icon={faMedal} />}
             heading="Goals"
             subheading="Create goals that you can track."
             anchor="goals"
-            body={<SectionGoals data={dataGoals} />}
+            body={<SectionGoals />}
           />
           <PageSection
             icon={<FontAwesomeIcon icon={faBrain} />}
             heading="Wellness"
             subheading="Log your overall wellness for the day."
             anchor="wellness"
-            body={<SectionWellness data={dataWellness} />}
+            body={<SectionWellness />}
           />
         </div>
       </div>
