@@ -8,13 +8,13 @@ import {
 import vigor from '../../api/vigor';
 
 const initialState = {
-  logs: [],
+  routines: [],
   filters: {
     sort: '',
     search: '',
     pagination: {},
   },
-  status: 'loading',
+  status: 'idle',
 };
 
 export const fetchFitnessRoutines = createAsyncThunk(
@@ -27,17 +27,26 @@ export const fetchFitnessRoutines = createAsyncThunk(
 
 export const updateFitnessRoutine = createAsyncThunk(
   'fitnessRoutines/updateFitnessRoutine',
-  async () => {}
-);
+  async (data) => {
+    console.log('Slice', data);
+    const response = await vigor.put(`/fitness/workouts/${data.id}`, {
+      name: data.name,
+      description: data.description,
+    });
 
-export const deleteFitnessRoutine = createAsyncThunk(
-  'fitnessRoutines/deleteFitnessRoutine',
-  async () => {}
+    return response.data.data;
+  }
 );
 
 export const createFitnessRoutine = createAsyncThunk(
   'fitnessRoutines/createFitnessRoutine',
-  async () => {}
+  async (workout) => {
+    const response = await vigor.post('/fitness/workouts/', {
+      name: workout.name,
+      description: workout.description,
+    });
+    return response.data.data;
+  }
 );
 
 const fitnessRoutinesSlice = createSlice({
@@ -51,7 +60,7 @@ const fitnessRoutinesSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchFitnessRoutines.fulfilled, (state, action) => {
-        state.logs = action.payload;
+        state.routines = action.payload;
         state.status = 'idle';
       })
       .addCase(fetchFitnessRoutines.rejected, (state, action) => {
@@ -60,28 +69,36 @@ const fitnessRoutinesSlice = createSlice({
 
     // UPDATE
     builder
-      .addCase(updateFitnessRoutine.pending, (state, action) => {})
-      .addCase(updateFitnessRoutine.fulfilled, (state, action) => {})
-      .addCase(updateFitnessRoutine.rejected, (state, action) => {});
-
-    // DELETE
-    builder
-      .addCase(deleteFitnessRoutine.pending, (state, action) => {})
-      .addCase(deleteFitnessRoutine.fulfilled, (state, action) => {})
-      .addCase(deleteFitnessRoutine.rejected, (state, action) => {});
+      .addCase(updateFitnessRoutine.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(updateFitnessRoutine.fulfilled, (state, action) => {
+        state.routines.map((routine, i) => {
+          if (routine.id === action.payload.id) {
+            console.log(routine);
+            console.log(action.payload);
+            state.routines[i] = action.payload;
+          }
+        });
+        state.status = 'idle';
+      })
+      .addCase(updateFitnessRoutine.rejected, (state, action) => {
+        state.status = 'error';
+      });
 
     // CREATE
     builder
-      .addCase(createFitnessRoutine.pending, (state, action) => {})
-      .addCase(createFitnessRoutine.fulfilled, (state, action) => {})
-      .addCase(createFitnessRoutine.rejected, (state, action) => {});
+      .addCase(createFitnessRoutine.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(createFitnessRoutine.fulfilled, (state, action) => {
+        state.routines.push(action.payload);
+        state.status = 'idle';
+      })
+      .addCase(createFitnessRoutine.rejected, (state, action) => {
+        state.status = 'error';
+      });
   },
 });
 
 export default fitnessRoutinesSlice.reducer;
-
-// Create Selectors
-// export const selectFitnessRoutinesById = createSelector(
-//   selectFitnessRoutines,
-//   (fitnessRoutines) => logs.map((log) => log.id)
-// );

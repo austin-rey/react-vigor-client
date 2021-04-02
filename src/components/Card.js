@@ -11,7 +11,7 @@ const Card = ({ date, title, subtitle, tag, footer }) => {
         )}
         <h5 className="font-sans font-bold text-xl">{title}</h5>
         <p className="text-sm pb-1">{subtitle}</p>
-        <p className="font-sans font-bold text-md text-green-500">{tag}</p>
+        <p className="font-sans text-md text-yellow-500">{tag}</p>
       </div>
       <div className="p-2">{footer}</div>
     </div>
