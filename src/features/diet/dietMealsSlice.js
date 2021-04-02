@@ -14,28 +14,42 @@ const initialState = {
     search: '',
     pagination: {},
   },
-  status: 'loading',
+  status: 'idle',
 };
 
-export const fetchMeals = createAsyncThunk('meals/fetchMeals', async () => {
-  const response = await vigor.get('/diet/meals/', {});
-  return response.data.data;
-});
-
-export const updateMeal = createAsyncThunk('meals/updateMeal', async (data) => {
-  const response = await vigor.put(`/diet/meals/${data.id}`, {});
-  return response.data.data;
-});
-
-export const deleteMeal = createAsyncThunk(
-  'meals/deleteMeals',
-  async (id) => {}
+export const fetchDietMeals = createAsyncThunk(
+  'meals/fetchDietMeals',
+  async () => {
+    const response = await vigor.get('/diet/meals/', {});
+    return response.data.data;
+  }
 );
 
-export const createMeal = createAsyncThunk('meals/createMeals', async () => {
-  const response = await vigor.post('/diet/meals/', {});
-  return response.data.data;
-});
+export const updateDietMeal = createAsyncThunk(
+  'meals/updateDietMeal',
+  async (data) => {
+    const response = await vigor.put(`/diet/meals/${data.mealId}`, {
+      name: data.name,
+      description: data.description,
+      calories: data.calories,
+      type: data.type,
+    });
+    return response.data.data;
+  }
+);
+
+export const createDietMeal = createAsyncThunk(
+  'meals/createDietMeals',
+  async (data) => {
+    const response = await vigor.post('/diet/meals/', {
+      name: data.name,
+      description: data.description,
+      type: data.type,
+      calories: data.calories,
+    });
+    return response.data.data;
+  }
+);
 
 const mealsSlice = createSlice({
   name: 'meals',
@@ -44,49 +58,45 @@ const mealsSlice = createSlice({
   extraReducers: (builder) => {
     // GET
     builder
-      .addCase(fetchMeals.pending, (state, action) => {
+      .addCase(fetchDietMeals.pending, (state, action) => {
         state.status = 'loading';
       })
-      .addCase(fetchMeals.fulfilled, (state, action) => {
+      .addCase(fetchDietMeals.fulfilled, (state, action) => {
+        console.log(action.payload);
+        state.meals = action.payload;
         state.status = 'idle';
       })
-      .addCase(fetchMeals.rejected, (state, action) => {
+      .addCase(fetchDietMeals.rejected, (state, action) => {
         state.status = 'error';
       });
 
     // UPDATE
     builder
-      .addCase(updateMeal.pending, (state, action) => {
+      .addCase(updateDietMeal.pending, (state, action) => {
         state.status = 'loading';
       })
-      .addCase(updateMeal.fulfilled, (state, action) => {
+      .addCase(updateDietMeal.fulfilled, (state, action) => {
+        state.meals.map((meal, i) => {
+          if (meal.id === action.payload.id) {
+            state.meals[i] = action.payload;
+          }
+        });
         state.status = 'idle';
       })
-      .addCase(updateMeal.rejected, (state, action) => {
-        state.status = 'error';
-      });
-
-    // DELETE
-    builder
-      .addCase(deleteMeal.pending, (state, action) => {
-        state.status = 'loading';
-      })
-      .addCase(deleteMeal.fulfilled, (state, action) => {
-        state.status = 'idle';
-      })
-      .addCase(deleteMeal.rejected, (state, action) => {
+      .addCase(updateDietMeal.rejected, (state, action) => {
         state.status = 'error';
       });
 
     // CREATE
     builder
-      .addCase(createMeal.pending, (state, action) => {
+      .addCase(createDietMeal.pending, (state, action) => {
         state.status = 'loading';
       })
-      .addCase(createMeal.fulfilled, (state, action) => {
+      .addCase(createDietMeal.fulfilled, (state, action) => {
+        state.meals.push(action.payload);
         state.status = 'idle';
       })
-      .addCase(createMeal.rejected, (state, action) => {
+      .addCase(createDietMeal.rejected, (state, action) => {
         state.status = 'error';
       });
   },

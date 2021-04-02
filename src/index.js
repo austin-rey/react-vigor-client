@@ -13,11 +13,13 @@ import store from './store';
 
 import { fetchFitnessLogs } from './features/fitness/fitnessLogsSlice';
 import { fetchFitnessRoutines } from './features/fitness/fitnessRoutinesSlice';
+import { fetchDietMeals } from './features/diet/dietMealsSlice';
 
 Modal.setAppElement(document.getElementById('root'));
 
 store.dispatch(fetchFitnessLogs());
 store.dispatch(fetchFitnessRoutines());
+store.dispatch(fetchDietMeals());
 
 ReactDOM.render(
   <React.StrictMode>
