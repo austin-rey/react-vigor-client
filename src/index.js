@@ -14,12 +14,16 @@ import store from './store';
 import { fetchFitnessLogs } from './features/fitness/fitnessLogsSlice';
 import { fetchFitnessRoutines } from './features/fitness/fitnessRoutinesSlice';
 import { fetchDietMeals } from './features/diet/dietMealsSlice';
+import { fetchDietLogs } from './features/diet/dietLogsSlice';
+import { fetchGoals } from './features/goals/goalsSlice';
 
 Modal.setAppElement(document.getElementById('root'));
 
 store.dispatch(fetchFitnessLogs());
 store.dispatch(fetchFitnessRoutines());
 store.dispatch(fetchDietMeals());
+store.dispatch(fetchDietLogs());
+store.dispatch(fetchGoals());
 
 ReactDOM.render(
   <React.StrictMode>

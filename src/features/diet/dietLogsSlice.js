@@ -20,9 +20,7 @@ const initialState = {
 export const fetchDietLogs = createAsyncThunk(
   'dietLogs/fetchDietLogs',
   async () => {
-    const response = await vigor.get('/diet/logs/', {
-      withCredentials: true,
-    });
+    const response = await vigor.get('/diet/logs/', {});
     return response.data.data;
   }
 );
@@ -30,20 +28,27 @@ export const fetchDietLogs = createAsyncThunk(
 export const updateDietLog = createAsyncThunk(
   'dietLogs/updateDietLog',
   async (data) => {
-    const response = await vigor.put(`/diet/logs/${data.id}`, {});
+    const response = await vigor.put(`/diet/logs/${data.id}`, {
+      meal: data.meal,
+    });
     return response.data.data;
   }
 );
 
 export const deleteDietLog = createAsyncThunk(
   'dietLogs/deleteDietLog',
-  async (id) => {}
+  async (id) => {
+    const response = await vigor.delete(`/diet/logs/${id}`, {});
+    return id;
+  }
 );
 
 export const createDietLog = createAsyncThunk(
   'dietLogs/createDietLog',
-  async () => {
-    const response = await vigor.post('/diet/logs/', {});
+  async (data) => {
+    const response = await vigor.post('/diet/logs/', {
+      meal: data.meal,
+    });
     return response.data.data;
   }
 );
@@ -72,7 +77,11 @@ const dietLogsSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(updateDietLog.fulfilled, (state, action) => {
-        state.logs = action.payload;
+        state.logs.map((log, i) => {
+          if (log.id === action.payload.id) {
+            state.logs[i] = action.payload;
+          }
+        });
         state.status = 'idle';
       })
       .addCase(updateDietLog.rejected, (state, action) => {
@@ -81,9 +90,20 @@ const dietLogsSlice = createSlice({
 
     // DELETE
     builder
-      .addCase(deleteDietLog.pending, (state, action) => {})
-      .addCase(deleteDietLog.fulfilled, (state, action) => {})
-      .addCase(deleteDietLog.rejected, (state, action) => {});
+      .addCase(deleteDietLog.pending, (state, action) => {
+        state.status = 'loading';
+      })
+      .addCase(deleteDietLog.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.logs.map((log, i) => {
+          if (log.id === action.payload) {
+            delete state.logs[i];
+          }
+        });
+      })
+      .addCase(deleteDietLog.rejected, (state, action) => {
+        state.status = 'error';
+      });
 
     // CREATE
     builder

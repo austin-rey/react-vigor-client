@@ -2,8 +2,10 @@ import React from 'react';
 import Card from '../Card';
 import Button from '../Button';
 import SubSectionHeading from './SubSectionHeading';
+import DietMeals from '../../features/diet/DietMeals';
+import DietLogs from '../../features/diet/DietLogs';
 
-const SectionDiet = ({ data }) => {
+const SectionDiet = () => {
   const buttonClicked = () => {
     console.log('button clicked');
   };
@@ -41,46 +43,8 @@ const SectionDiet = ({ data }) => {
           tag="1600 Calories"
         />
       </div>
-      <div className="flex flex-row mb-12">
-        <SubSectionHeading
-          heading="Log Meals"
-          subheading="Create, Update and Delete Meals"
-        />
-        <div className="flex flex-row flex-grow flex-wrap w-full">
-          <div className="w-56 mr-2 mb-2">
-            <Button onclick={buttonClicked} />
-          </div>
-          <div className="w-56 mr-2 mb-2 shadow-lg">
-            <Card
-              date="1/16"
-              title="Track Run"
-              subtitle="A description of this workout"
-              tag="Type"
-              footer={<p>icons</p>}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-row mb-8">
-        <SubSectionHeading
-          heading="Create Meals"
-          subheading="Create meals that you often consume."
-        />
-        <div className="flex flex-row flex-wrap w-full">
-          <div className="w-56 mr-2 mb-2">
-            <Button onclick={buttonClicked} />
-          </div>
-          <div className="w-56 mr-2 mb-2 shadow-lg">
-            <Card
-              date="1/16"
-              title="Track Run"
-              subtitle="A description of this workout"
-              tag="Type"
-              footer={<p>icons</p>}
-            />
-          </div>
-        </div>
-      </div>
+      <DietLogs />
+      <DietMeals />
     </div>
   );
 };
