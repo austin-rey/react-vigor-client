@@ -5,6 +5,7 @@ import fitnessRoutinesReducer from './features/fitness/fitnessRoutinesSlice';
 import dietMealsReducer from './features/diet/dietMealsSlice';
 import dietLogsReducer from './features/diet/dietLogsSlice';
 import goalsReducer from './features/goals/goalsSlice';
+import wellnessLogsReducer from './features/wellness/wellnessSlice';
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     dietMeals: dietMealsReducer,
     dietLogs: dietLogsReducer,
     goals: goalsReducer,
+    wellnessLogs: wellnessLogsReducer,
   },
 });
 

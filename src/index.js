@@ -16,6 +16,7 @@ import { fetchFitnessRoutines } from './features/fitness/fitnessRoutinesSlice';
 import { fetchDietMeals } from './features/diet/dietMealsSlice';
 import { fetchDietLogs } from './features/diet/dietLogsSlice';
 import { fetchGoals } from './features/goals/goalsSlice';
+import { fetchWellnessLogs } from './features/wellness/wellnessSlice';
 
 Modal.setAppElement(document.getElementById('root'));
 
@@ -24,6 +25,7 @@ store.dispatch(fetchFitnessRoutines());
 store.dispatch(fetchDietMeals());
 store.dispatch(fetchDietLogs());
 store.dispatch(fetchGoals());
+store.dispatch(fetchWellnessLogs());
 
 ReactDOM.render(
   <React.StrictMode>
