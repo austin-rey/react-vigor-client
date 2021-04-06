@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PageHeader from '../components/page-layout/PageHeader';
 import Calendar from '../components/Calendar';
 import PageSection from '../components/page-layout/PageSection';
-import PageSidebar from '../components/page-layout/PageSidebar';
+import PageTabBar from '../components/page-layout/PageTabBar';
 import SectionDiet from '../components/dashboard-sections/SectionDiet';
 import SectionFitness from '../components/dashboard-sections/SectionFitness';
 import SectionGoals from '../components/dashboard-sections/SectionGoals';
@@ -17,13 +17,19 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const Dashboard = () => {
+  const [activeTab, setActiveTab] = useState('fitness');
+
+  const updateActiveTab = (tabName) => {
+    setActiveTab(tabName);
+  };
+
   return (
     <div className="container mx-auto">
       <PageHeader heading="Dashboard" />
       <Calendar />
       <div className="flex flex-col">
         <div className="flex flex-row items-center justify-between w-full border-b-2">
-          <PageSidebar />
+          <PageTabBar changeTab={updateActiveTab} />
         </div>
         <div className="flex flex-grow flex-col">
           <PageSection
@@ -32,6 +38,7 @@ const Dashboard = () => {
             subheading="Log workouts and create fitness routines."
             anchor="fitness"
             body={<SectionFitness />}
+            show={activeTab === 'fitness'}
           />
           <PageSection
             icon={<FontAwesomeIcon icon={faCarrot} />}
@@ -39,6 +46,7 @@ const Dashboard = () => {
             subheading="Log food consumption and store meal information."
             anchor="diet"
             body={<SectionDiet />}
+            show={activeTab === 'diet'}
           />
           <PageSection
             icon={<FontAwesomeIcon icon={faMedal} />}
@@ -46,6 +54,7 @@ const Dashboard = () => {
             subheading="Create goals that you can track."
             anchor="goals"
             body={<SectionGoals />}
+            show={activeTab === 'goals'}
           />
           <PageSection
             icon={<FontAwesomeIcon icon={faBrain} />}
@@ -53,6 +62,7 @@ const Dashboard = () => {
             subheading="Log your overall wellness for the day."
             anchor="wellness"
             body={<SectionWellness />}
+            show={activeTab === 'wellness'}
           />
         </div>
       </div>

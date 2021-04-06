@@ -1,17 +1,12 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-const Button = ({ onclick }) => {
+const Button = ({ onclick, body, color }) => {
   return (
     <button
       onClick={onclick}
-      className="w-full h-full flex flex-col items-center justify-center shadow-lg opacity-90 bg-green-500 rounded-sm text-white hover:bg-white hover:text-green-500 hover:border-3 transition duration-400 ease-in-out"
+      className={`transition duration-200 ease-in-out transform w-full h-full flex flex-col items-center justify-center shadow-lg opacity-90 bg-${color}-500 rounded-sm text-white hover:bg-${color}-200 hover:border-3 hover:text-gray-900 duration-400 ease-in-out hover:scale-110`}
     >
-      <span className="text-2xl pb-1">
-        <FontAwesomeIcon icon={faPlusCircle} />
-      </span>
-      <h5 className="font-sans font-bold text-xl">CREATE</h5>
+      {body}
     </button>
   );
 };
