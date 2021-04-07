@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const PageHeader = ({ heading }) => {
   return (
@@ -8,6 +9,10 @@ const PageHeader = ({ heading }) => {
       </h1>
     </div>
   );
+};
+
+PageHeader.propTypes = {
+  heading: PropTypes.string,
 };
 
 export default PageHeader;

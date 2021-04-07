@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Button from '../Button';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faDumbbell,
@@ -52,6 +52,10 @@ const PageTabBar = ({ changeTab }) => {
       ))}
     </>
   );
+};
+
+PageTabBar.propTypes = {
+  changeTab: PropTypes.func,
 };
 
 export default PageTabBar;

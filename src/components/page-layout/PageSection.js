@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronCircleDown,
@@ -12,7 +12,9 @@ const PageSection = ({
   heading = 'Section Heading',
   subheading = 'Section Subheading',
   body,
+  show,
 }) => {
+  if (!show) return <></>;
   return (
     <div className="w-full border-b-2 mb-10">
       <div className="flex w-full flex-row justify-between">
@@ -39,6 +41,15 @@ const PageSection = ({
       <div className="my-2">{body}</div>
     </div>
   );
+};
+
+PageSection.propTypes = {
+  anchor: PropTypes.string,
+  icon: PropTypes.element,
+  heading: PropTypes.string,
+  subheading: PropTypes.string,
+  body: PropTypes.element,
+  show: PropTypes.bool,
 };
 
 export default PageSection;

@@ -1,14 +1,9 @@
 import React from 'react';
 import Card from '../Card';
-import Button from '../Button';
-import SubSectionHeading from './SubSectionHeading';
 import DietMeals from '../../features/diet/DietMeals';
 import DietLogs from '../../features/diet/DietLogs';
 
 const SectionDiet = () => {
-  const buttonClicked = () => {
-    console.log('button clicked');
-  };
   return (
     <div className="flex flex-col">
       <div className="flex flex-row mb-8 bg-white w-full rounded-md shadow-lg mb-12 opacity-90">
