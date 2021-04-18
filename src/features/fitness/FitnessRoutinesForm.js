@@ -1,15 +1,15 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector, useDispatch } from 'react-redux';
 
 const FitnessRoutinesForm = ({ state }) => {
   const { register, errors, handleSubmit } = useForm({
     defaultValues: state.formValues,
   });
+
   const { submitHandler } = state;
 
   return (
-    <form>
+    <form className="py-4 px-8">
       <label
         for="nameField"
         className="leading-10 text-left text-lg w-full font-sans"
@@ -44,8 +44,9 @@ const FitnessRoutinesForm = ({ state }) => {
 
       <input
         type="submit"
+        value={state.submitType}
         onClick={handleSubmit((data) => submitHandler(data, state.routineId))}
-        className="w-full p-4 bg-gray-700 text-white font-bold rounded-sm cursor-pointer hover:bg-gray-900"
+        className="font-sans font-bold text-xl mt-4 cursor-pointer p-4 transition duration-200 ease-in-out transform w-full h-full flex flex-col items-center justify-center shadow-lg opacity-90 bg-green-500 rounded-sm text-white hover:bg-green-200 hover:border-3 hover:text-gray-900 duration-400 ease-in-out hover:scale-105"
       />
     </form>
   );

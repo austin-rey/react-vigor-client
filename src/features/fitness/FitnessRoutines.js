@@ -8,9 +8,11 @@ import Loading from '../../components/Loading';
 import {
   createFitnessRoutine,
   updateFitnessRoutine,
-  deleteFitnessRoutine,
 } from './fitnessRoutinesSlice';
 import FitnessRoutinesForm from './FitnessRoutinesForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { isToday, getMonthDay, getDayName } from '../../util/dates';
 
 const FitnessRoutines = () => {
   const dispatch = useDispatch();
@@ -39,11 +41,24 @@ const FitnessRoutines = () => {
     setIsOpen(false);
   }
 
+  const modalStyles = {
+    content: {
+      padding: '0px',
+      left: '50%',
+      right: 'auto',
+      transform: 'translate(-50%, 0%)',
+      maxWidth: '900px',
+      maxheight: '600px',
+      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+    },
+  };
+
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // FORM
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   const [formState, setFormState] = useState({
     submitHandler: undefined,
+    submitType: '',
     routineId: '',
     formValues: {
       nameField: '',
@@ -52,14 +67,18 @@ const FitnessRoutines = () => {
   });
 
   let createButtonClicked = () => {
-    setFormState({ submitHandler: createRoutine, formValues: {} });
+    setFormState({
+      submitHandler: createRoutine,
+      submitType: 'Create',
+      formValues: {},
+    });
     openModal();
   };
 
   let editButtonClicked = (routine, e) => {
-    console.log(routine);
     setFormState({
       submitHandler: editRoutine,
+      submitType: 'Edit',
       routineId: routine.id,
       formValues: {
         name: routine.name,
@@ -94,25 +113,35 @@ const FitnessRoutines = () => {
   const CardFooter = ({ routine }) => {
     return (
       <div className="flex flex-row w-full justify-evenly px-4 cursor-pointer">
-        <button onClick={(e) => editButtonClicked(routine, e)}>
-          <p className="font-sans font-bold text-md text-green-500">Edit</p>
-        </button>
+        <Button
+          color="yellow"
+          onclick={(e) => editButtonClicked(routine, e)}
+          body={<p className="font-sans font-bold text-md">Edit</p>}
+        />
       </div>
     );
   };
   const RoutineCards = fitnessRoutines.routines.map((routine) => {
     return (
-      <div className="w-56 mr-2 mb-2 shadow-lg flex" key={routine.id}>
+      <div className="w-64 ml-4 mb-4 shadow-lg flex" key={routine.id}>
         <Card
-          date={routine.created_at}
+          date={getMonthDay(routine.created_at)}
           title={routine.name}
           subtitle={routine.description}
-          tag={`${routine.user.first_name} ${routine.user.last_name}`}
           footer={<CardFooter routine={routine} />}
         />
       </div>
     );
   });
+
+  const CreateButtonBody = (
+    <>
+      <span className="text-2xl pb-1">
+        <FontAwesomeIcon icon={faPlusCircle} />
+      </span>
+      <h5 className="font-sans font-bold text-xl">CREATE</h5>
+    </>
+  );
 
   return (
     <>
@@ -124,9 +153,13 @@ const FitnessRoutines = () => {
           searchValue={searchValue}
           searchChange={searchChange}
         />
-        <div className="flex flex-row flex-grow flex-wrap w-full">
-          <div className="w-56 mr-2 mb-2">
-            <Button onclick={createButtonClicked} />
+        <div className="flex flex-row flex-grow flex-wrap w-full justify-end">
+          <div className="w-64 ml-4 mb-4">
+            <Button
+              onclick={createButtonClicked}
+              color="green"
+              body={CreateButtonBody}
+            />
           </div>
           {RoutineCards}
         </div>
@@ -135,7 +168,13 @@ const FitnessRoutines = () => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Fitness Log Modal"
+        style={modalStyles}
       >
+        <div className="bg-gray-900">
+          <h3 className="font-sans font-bold text-3xl p-5 text-white">
+            {formState.submitType} Routine
+          </h3>
+        </div>
         <FitnessRoutinesForm state={formState} />
       </Modal>
     </>

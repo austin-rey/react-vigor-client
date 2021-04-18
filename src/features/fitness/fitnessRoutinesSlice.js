@@ -20,7 +20,9 @@ const initialState = {
 export const fetchFitnessRoutines = createAsyncThunk(
   'fitnessRoutines/fetchFitnessRoutines',
   async () => {
-    const response = await vigor.get('/fitness/workouts/');
+    const response = await vigor.get('/fitness/workouts/', {
+      withCredentials: true,
+    });
     return response.data.data;
   }
 );
@@ -28,11 +30,14 @@ export const fetchFitnessRoutines = createAsyncThunk(
 export const updateFitnessRoutine = createAsyncThunk(
   'fitnessRoutines/updateFitnessRoutine',
   async (data) => {
-    console.log('Slice', data);
-    const response = await vigor.put(`/fitness/workouts/${data.id}`, {
-      name: data.name,
-      description: data.description,
-    });
+    const response = await vigor.put(
+      `/fitness/workouts/${data.id}`,
+      {
+        name: data.name,
+        description: data.description,
+      },
+      { withCredentials: true }
+    );
 
     return response.data.data;
   }
@@ -41,10 +46,14 @@ export const updateFitnessRoutine = createAsyncThunk(
 export const createFitnessRoutine = createAsyncThunk(
   'fitnessRoutines/createFitnessRoutine',
   async (workout) => {
-    const response = await vigor.post('/fitness/workouts/', {
-      name: workout.name,
-      description: workout.description,
-    });
+    const response = await vigor.post(
+      '/fitness/workouts/',
+      {
+        name: workout.name,
+        description: workout.description,
+      },
+      { withCredentials: true }
+    );
     return response.data.data;
   }
 );
@@ -75,8 +84,6 @@ const fitnessRoutinesSlice = createSlice({
       .addCase(updateFitnessRoutine.fulfilled, (state, action) => {
         state.routines.map((routine, i) => {
           if (routine.id === action.payload.id) {
-            console.log(routine);
-            console.log(action.payload);
             state.routines[i] = action.payload;
           }
         });
