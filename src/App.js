@@ -15,6 +15,8 @@ import { fetchDietReport } from './features/diet/dietLogsSlice';
 import { fetchGoals } from './features/goals/goalsSlice';
 import { fetchWellnessLogs } from './features/wellness/wellnessSlice';
 import { checkAuthentication } from './features/user/userSlice';
+import { fetchLogsByMonthYear } from './features/calendar/calendarSlice';
+
 const App = () => {
   const dispatch = useDispatch();
 
@@ -22,17 +24,27 @@ const App = () => {
 
   // Check authentication across sessions stored in local storage
   useEffect(() => {
+    window.localStorage.setItem('authenticated', true);
     dispatch(checkAuthentication());
   }, []);
 
-  store.dispatch(fetchFitnessLogs());
-  store.dispatch(fetchFitnessReport());
-  store.dispatch(fetchFitnessRoutines());
-  store.dispatch(fetchDietMeals());
-  store.dispatch(fetchDietLogs());
-  store.dispatch(fetchDietReport());
-  store.dispatch(fetchGoals());
-  store.dispatch(fetchWellnessLogs());
+  if (authenticated) {
+    console.log(new Date().getFullYear());
+    store.dispatch(fetchFitnessLogs());
+    store.dispatch(fetchFitnessReport());
+    store.dispatch(fetchFitnessRoutines());
+    store.dispatch(fetchDietMeals());
+    store.dispatch(fetchDietLogs());
+    store.dispatch(fetchDietReport());
+    store.dispatch(fetchGoals());
+    store.dispatch(fetchWellnessLogs());
+    store.dispatch(
+      fetchLogsByMonthYear({
+        month: new Date().getMonth() + 1,
+        year: new Date().getFullYear(),
+      })
+    );
+  }
 
   const routes = authenticated !== null ? <Routes /> : null;
 

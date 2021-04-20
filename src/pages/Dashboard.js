@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PageHeader from '../components/page-layout/PageHeader';
-import Calendar from '../components/Calendar';
+import Calendar from '../features/calendar/Calendar';
 import PageSection from '../components/page-layout/PageSection';
 import PageTabBar from '../components/page-layout/PageTabBar';
 import SectionDiet from '../components/dashboard-sections/SectionDiet';
